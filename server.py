@@ -33,12 +33,17 @@ def write_to_txt(submitted_data_dict):
 		
 
 def write_to_csv(submitted_data_dict):
-	with open("E:\Learning\Python\webserver\submitted_data.csv",newline = '',mode ='a') as database_csv:
-		database_csv_writer = csv.writer(database_csv,delimiter =',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+	try:
+		with open("submitted_data.csv",newline = '',mode ='a') as database_csv:
+			database_csv_writer = csv.writer(database_csv,delimiter =',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
 
-		email = submitted_data_dict['email']
-		subject = submitted_data_dict['subject']
-		message = submitted_data_dict['message']
-		database_csv_writer.writerow([email,subject,message])
+			email = submitted_data_dict['email']
+			subject = submitted_data_dict['subject']
+			message = submitted_data_dict['message']
+			database_csv_writer.writerow([email,subject,message])
+			print("Data saved into database")
+	except :
+		print('Data not saved into database')
+
 
 
