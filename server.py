@@ -1,11 +1,22 @@
 from flask import Flask, render_template, request, redirect
 import csv
+import random
 app = Flask(__name__)
 
 
 @app.route('/')
 def home_page():
     return render_template('index.html')
+
+@app.route('/password',methods = ['POST','GET'])
+def password():
+	if request.method == "POST":
+		length = int(request.form.get("length"))
+		numbers_required = request.form.get("numbers")
+		special_required = request.form.get("special_chars")
+		
+	return render_template('password.html',password= random_password_generator(length,numbers_required,special_required))
+
 
 @app.route('/<string:page_name>')
 def page(page_name):
@@ -44,6 +55,23 @@ def write_to_csv(submitted_data_dict):
 			print("Data saved into database")
 	except :
 		print('Data not saved into database')
+
+def random_password_generator(length,numbers_required,special_required):
+	characters = list('abcdefghijklmnopqrstuvwxyz')
+	numbers = list('0123456789')
+	special = list('!@#$%^&*()')
+
+	
+	if numbers_required:
+		characters.extend(numbers)
+	if special_required:
+		characters.extend(special)
+
+	password = ''
+	for x in range(length):
+		password += random.choice(characters)
+
+	return password
 
 
 
